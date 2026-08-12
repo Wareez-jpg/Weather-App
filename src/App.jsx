@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import SearchBar from './components/SearchBar'
 import './App.css'
 
@@ -18,9 +18,9 @@ const weatherCodeMap = {
 }
 
 function App() {
-  const [weatherData, setWeatherData] = useState(null)
+  const [cities, setCities] = useState(null)
 
-  async function handleSearch(city) {
+  async function fetchCityWeather(city) {
     const geoResponse = await fetch(
       `https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=1`
     )
@@ -28,7 +28,7 @@ function App() {
 
     if (!geoData.results || geoData.results.length === 0) {
       alert('City not found. Please check the spelling and try again.')
-      return
+      return null
     }
 
     const { latitude, longitude, name } = geoData.results[0]
@@ -37,8 +37,27 @@ function App() {
       `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,weather_code,relative_humidity_2m,wind_speed_10m`
     )
     const weatherData = await weatherResponse.json()
-     
-    setWeatherData({ ...weatherData.current, city: name })
+
+    return { ...weatherData.current, city: name }
+  }
+
+  useEffect(() => {
+    async function loadDefaultCities() {
+      const defaultCityNames = ['Liverpool', 'London', 'New York']
+      const results = await Promise.all(
+        defaultCityNames.map((city) => fetchCityWeather(city))
+      )
+      setCities(results.filter((result) => result !== null))
+    }
+
+    loadDefaultCities()
+  }, [])
+
+  async function handleSearch(city) {
+    const result = await fetchCityWeather(city)
+    if (result) {
+      setCities((prevCities) => [...prevCities, result])
+    }
   }
 
   return (
