@@ -68,6 +68,14 @@ h1 {
   background-color: var(--accent-hover);
 }
 
+.cities-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+  margin-top: 2rem
+}
+
 .weather_display {
   background-color: var(--bg-surface);
   border-radius: 16px;

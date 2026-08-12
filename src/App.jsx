@@ -18,7 +18,7 @@ const weatherCodeMap = {
 }
 
 function App() {
-  const [cities, setCities] = useState(null)
+  const [cities, setCities] = useState([])
 
   async function fetchCityWeather(city) {
     const geoResponse = await fetch(
@@ -43,7 +43,7 @@ function App() {
 
   useEffect(() => {
     async function loadDefaultCities() {
-      const defaultCityNames = ['Liverpool', 'London', 'New York']
+      const defaultCityNames = ['London', 'New York', 'Lagos']
       const results = await Promise.all(
         defaultCityNames.map((city) => fetchCityWeather(city))
       )
@@ -63,17 +63,22 @@ function App() {
   return (
     <div className="app">
       <h1>Weather App</h1>
-      <SearchBar onSearch={handleSearch}/>
-      {weatherData && (
-        <div className={`weather-display theme-${weatherCodeMap[weatherData.weather_code].theme}`}>
-          <h2>{weatherData.city}</h2>
-          <div className="icon">{weatherCodeMap[weatherData.weather_code].icon}</div>
-          <p>Temperature: {weatherData.temperature_2m}°C</p>
-          <p>Condition: {weatherCodeMap[weatherData.weather_code].label}</p>
-          <p>Humidity: {weatherData.relative_humidity_2m}%</p>
-          <p>Wind Speed: {weatherData.wind_speed_10m} km/h</p>
-        </div>
-      )}
+      <SearchBar onSearch={handleSearch} />
+      <div className="cities-container">
+        {cities.map((cityData) => (
+          <div
+            key={cityData.city}
+            className={`weather-display theme-${weatherCodeMap[cityData.weather_code].theme}`}
+          >
+            <h2>{cityData.city}</h2>
+            <div className="icon">{weatherCodeMap[cityData.weather_code].icon}</div>
+            <p>Temperature: {cityData.temperature_2m}°C</p>
+            <p>Condition: {weatherCodeMap[cityData.weather_code].label}</p>
+            <p>Humidity: {cityData.relative_humidity_2m}%</p>
+            <p>Wind Speed: {cityData.wind_speed_10m} km/h</p>
+          </div>
+        ))}
+      </div>
     </div>
   )
 }
