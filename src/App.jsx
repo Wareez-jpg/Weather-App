@@ -19,6 +19,7 @@ const weatherCodeMap = {
 
 function App() {
   const [cities, setCities] = useState([])
+  const [previewCity, setPreviewCity] = useState(null)
 
   async function fetchCityWeather(city) {
     const geoResponse = await fetch(
@@ -56,14 +57,46 @@ function App() {
   async function handleSearch(city) {
     const result = await fetchCityWeather(city)
     if (result) {
-      setCities((prevCities) => [...prevCities, result])
+      setPreviewCity(result)
     }
+  }
+
+  function handleAddCity() {
+    setCities((prevCities) => {
+      const alreadyExists = prevCities.some(
+        (c) => c.city.toLowerCase() === previewCity.city.toLowerCase()
+      )
+      if (alreadyExists) {
+        alert(`${previewCity.city} is already on your dashboard.`)
+        return prevCities
+      }
+      return [...prevCities, previewCity]
+    })
+    setPreviewCity(null)
   }
 
   return (
     <div className="app">
       <h1>Weather App</h1>
       <SearchBar onSearch={handleSearch} />
+      
+      {previewCity && (
+        <div className="modal-backdrop" onClick={() => setPreviewCity(null)}>
+          <div
+            className={`weather-display theme-${weatherCodeMap[previewCity.weather_code].theme}`}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2>{previewCity.city}</h2>
+            <div className="icon">{weatherCodeMap[previewCity.weather_code].icon}</div>
+            <p>Temperature: {previewCity.temperature_2m}°C</p>
+            <p>Condition: {weatherCodeMap[previewCity.weather_code].label}</p>
+            <p>Humidity: {previewCity.relative_humidity_2m}%</p>
+            <p>Wind Speed: {previewCity.wind_speed_10m} km/h</p>
+            <button className="add-btn" onClick={handleAddCity}>+ Add to Dashboard</button>
+          </div>
+        </div>
+      )}
+
       <div className="cities-container">
         {cities.map((cityData) => (
           <div
