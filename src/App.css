@@ -199,7 +199,7 @@ h1 {
   min-height: 100px;
 }
 
-.review-form input::placeholder
+.review-form input::placeholder,
 .review-form textarea::placeholder {
   color: var(--text-secondary);
 }
