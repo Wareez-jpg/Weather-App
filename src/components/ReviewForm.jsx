@@ -66,7 +66,7 @@ function ReviewForm({ onClose }) {
                         type="email"
                         placeholder="Your Email"
                         value={email}
-                        onChange={(e) => setyEmail(e.target.value)}
+                        onChange={(e) => setEmail(e.target.value)}
                         required
                     />
                     <textarea
