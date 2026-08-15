@@ -84,13 +84,30 @@ h1 {
   background-color: var(--accent-hover);
 }
 
+.remove-btn {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 1.25rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.remove-btn:hover {
+  color: #e05252;
+}
+
 .modal-backdrop {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(234, 244, 252, 0.5);
+  backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -120,13 +137,14 @@ h1 {
   margin-top: 2rem
 }
 
-.weather_display {
+.weather-display {
   background-color: var(--bg-surface);
   border-radius: 16px;
   padding: 2rem;
   margin-top: 2rem;
   min-width: 28opx;
   box-shadow: 0 8px 24px var(--shadow);
+  position: relative;
 }
 
 .weather-display h2 {

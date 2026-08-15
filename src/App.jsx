@@ -42,17 +42,34 @@ function App() {
     return { ...weatherData.current, city: name }
   }
 
+  const[hasLoaded, setHasLoaded] = useState(false)
+
   useEffect(() => {
+    const saved = localStorage.getItem('savedCities')
+
+    if (saved) {
+      setCities(JSON.parse(saved))
+      setHasLoaded(true)
+      return
+    }
+
     async function loadDefaultCities() {
       const defaultCityNames = ['London', 'New York', 'Lagos']
       const results = await Promise.all(
         defaultCityNames.map((city) => fetchCityWeather(city))
       )
       setCities(results.filter((result) => result !== null))
+      setHasLoaded(true)
     }
 
     loadDefaultCities()
   }, [])
+
+  useEffect(() => {
+    if (hasLoaded) {
+      localStorage.setItem('savedCities', JSON.stringify(cities))
+    }
+  }, [cities, hasLoaded])
 
   async function handleSearch(city) {
     const result = await fetchCityWeather(city)
@@ -73,6 +90,10 @@ function App() {
       return [...prevCities, previewCity]
     })
     setPreviewCity(null)
+  }
+
+  function handleRemove(cityName) {
+    setCities((prevCities) => prevCities.filter((c) => c.city !== cityName))
   }
 
   return (
@@ -103,6 +124,7 @@ function App() {
             key={cityData.city}
             className={`weather-display theme-${weatherCodeMap[cityData.weather_code].theme}`}
           >
+            <button className="remove-btn" onClick={() => handleRemove(cityData.city)}>-</button>
             <h2>{cityData.city}</h2>
             <div className="icon">{weatherCodeMap[cityData.weather_code].icon}</div>
             <p>Temperature: {cityData.temperature_2m}°C</p>
