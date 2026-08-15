@@ -1,7 +1,7 @@
 # Weather App
 
 A React Weather dashboard that lets users search any city and add it to a personal dashboard, built to learn React fundamentals from scratch.
-Live site: [Here](https://weather-eneiad8fq-wareez-jpg1.vercel.app)
+Live site: [Here](https://https://weather-app-eight-iota-k98tkvufla.vercel.app/)
 
 ## What I'm Building
 A dashboard-style weather app where users can search cities, preview their weather in a modal, add cities to a saved dashboard, and remove them. Saved cities persist across page refreshes using localStorage.
@@ -37,3 +37,11 @@ CSS3
 - Built a modal overlay with blurred backdrop for the search preview
 - Learned localStorage for persisting saved cities accross refreshes
 - Debugged a useEffect timing bug that was wiping saved data on load
+- Deployed weather-app live to Vercel, connected through Github
+- Learned production vs preview deployment URLs
+- INstalled EmailJS SDK via npm instead of CDN script tag
+- Built ReviewForm component with a star rating system
+- Learned emailjs.send() (object-based) vs sendForm() (reads from DOM directly)
+- Learned ternary operators for conditional star styling
+- Added a "Leave a Review" button in a footer
+- Styled the review form to match the app's sky-blue theme

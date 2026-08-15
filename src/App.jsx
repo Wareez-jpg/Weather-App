@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import SearchBar from './components/SearchBar'
 import './App.css'
+import ReviewForm from './components/ReviewForm'
 
 const weatherCodeMap = {
   0: { label: 'Clear sky', icon: '☀️', theme: 'sunny' },
@@ -20,6 +21,7 @@ const weatherCodeMap = {
 function App() {
   const [cities, setCities] = useState([])
   const [previewCity, setPreviewCity] = useState(null)
+  const  [showReviewForm, setShowReviewForm] = useState(false)
 
   async function fetchCityWeather(city) {
     const geoResponse = await fetch(
@@ -134,6 +136,16 @@ function App() {
           </div>
         ))}
       </div>
+
+      <footer className="app-footer">
+        <button className="review-toggle-btn" onClick={() => setShowReviewForm(true)}>
+          Leave a Review
+        </button>
+      </footer>
+
+      {showReviewForm && (
+        <ReviewForm onClose={() => setShowReviewForm(false)} />
+      )}
     </div>
   )
 }
