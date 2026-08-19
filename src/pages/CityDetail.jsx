@@ -19,14 +19,20 @@ function CityDetail() {
         return <p>Loading...</p>
     }
 
+    const conditionInfo = weatherCodeMap[weather.weather_code] || {
+        label: 'Unknown',
+        icon: '❓',
+        theme: 'cloudy',
+    }
+
     return (
         <div className="app">
-            <Link to="/">BacK to Dashboard</Link>
+            <Link to="/">← Back to Dashboard</Link>
             <h1>{weather.city}</h1>
-            <div className="icon">{weatherCodeMap[weather.weather_code].icon}</div>
+            <div className="icon">{conditionInfo.icon}</div>
             <p>Local Time: {weather.localTime}</p>
             <p>Temperature: {weather.temperature_2m}°C</p>
-            <p>Condition: {weatherCodeMap[weather.weather_code].label}</p>
+            <p>Condition: {conditionInfo.label}</p>
             <p>Humidity: {weather.relative_humidity_2m}%</p>
             <p>Wind Speed: {weather.wind_speed_10m} km/h</p>
         </div>

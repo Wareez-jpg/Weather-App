@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import SearchBar from "../components/SearchBar";
 import ReviewForm from "../components/ReviewForm";
@@ -67,40 +68,52 @@ function Dashboard() {
       <h1>Weather App</h1>
       <SearchBar onSearch={handleSearch} />
       
-      {previewCity && (
-        <div className="modal-backdrop" onClick={() => setPreviewCity(null)}>
-          <div
-            className={`weather-display theme-${weatherCodeMap[previewCity.weather_code].theme}`}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <h2>{previewCity.city}</h2>
-            <div className="icon">{weatherCodeMap[previewCity.weather_code].icon}</div>
-            <p>Local Time: {previewCity.localTime}</p>
-            <p>Temperature: {previewCity.temperature_2m}°C</p>
-            <p>Condition: {weatherCodeMap[previewCity.weather_code].label}</p>
-            <p>Humidity: {previewCity.relative_humidity_2m}%</p>
-            <p>Wind Speed: {previewCity.wind_speed_10m} km/h</p>
-            <button className="add-btn" onClick={handleAddCity}>+ Add to Dashboard</button>
+      {previewCity && (() => {
+        const conditionInfo = weatherCodeMap[previewCity.weather_code] || {
+          label: 'Unknown', icon: '❓', theme: 'cloudy',
+        }
+        return (
+          <div className="modal-backdrop" onClick={() => setPreviewCity(null)}>
+            <div
+              className={`weather-display theme-${conditionInfo.theme}`}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <h2>{previewCity.city}</h2>
+              <div className="icon">{conditionInfo.icon}</div>
+              <p>Local Time: {previewCity.localTime}</p>
+              <p>Temperature: {previewCity.temperature_2m}°C</p>
+              <p>Condition: {conditionInfo.label}</p>
+              <p>Humidity: {previewCity.relative_humidity_2m}%</p>
+              <p>Wind Speed: {previewCity.wind_speed_10m} km/h</p>
+              <button className="add-btn" onClick={handleAddCity}>+ Add to Dashboard</button>
+            </div>
           </div>
-        </div>
-      )}
+        )
+      })()}
 
       <div className="cities-container">
-        {cities.map((cityData) => (
-          <div
-            key={cityData.city}
-            className={`weather-display theme-${weatherCodeMap[cityData.weather_code].theme}`}
-          >
-            <button className="remove-btn" onClick={() => handleRemove(cityData.city)}>-</button>
-            <h2>{cityData.city}</h2>
-            <div className="icon">{weatherCodeMap[cityData.weather_code].icon}</div>
-            <p>Local Time: {cityData.localTime}</p>
-            <p>Temperature: {cityData.temperature_2m}°C</p>
-            <p>Condition: {weatherCodeMap[cityData.weather_code].label}</p>
-            <p>Humidity: {cityData.relative_humidity_2m}%</p>
-            <p>Wind Speed: {cityData.wind_speed_10m} km/h</p>
-          </div>
-        ))}
+        {cities.map((cityData) => {
+          const conditionInfo = weatherCodeMap[cityData.weather_code] || {
+            label: 'Unknown', icon: '❓', theme: 'cloudy',
+          }
+          return (
+            <div
+              key={cityData.city}
+              className={`weather-display theme-${conditionInfo.theme}`}
+            >
+              <button className="remove-btn" onClick={() => handleRemove(cityData.city)}>-</button>
+              <h2>
+                <Link to={`/city/${cityData.city}`}>{cityData.city}</Link>
+              </h2>
+              <div className="icon">{conditionInfo.icon}</div>
+              <p>Local Time: {cityData.localTime}</p>
+              <p>Temperature: {cityData.temperature_2m}°C</p>
+              <p>Condition: {conditionInfo.label}</p>
+              <p>Humidity: {cityData.relative_humidity_2m}%</p>
+              <p>Wind Speed: {cityData.wind_speed_10m} km/h</p>
+            </div>
+          )
+        })}
       </div>
 
       <footer className="app-footer">
