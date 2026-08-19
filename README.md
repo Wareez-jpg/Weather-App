@@ -45,3 +45,7 @@ CSS3
 - Learned ternary operators for conditional star styling
 - Added a "Leave a Review" button in a footer
 - Styled the review form to match the app's sky-blue theme
+- Learned React Router
+- Restructured app into pages
+- Added local time display using Open-Meteo's API
+- Added fallback pattern for unmapped WMO weather codes to prevent crashes

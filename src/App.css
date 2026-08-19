@@ -15,6 +15,25 @@ body {
   font-family: system-ui, sans-serif;
 }
 
+.main-nav {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  padding: 1rem;
+  background-color: var(--bg-surface);
+  box-shadow: 0 2px 8px var(--shadow);
+}
+
+.main-nav a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.main-nav a:hover {
+  color: var(--accent-hover);
+}
+
 .app {
   display: flex;
   flex-direction: column;
@@ -22,6 +41,23 @@ body {
   min-height: 100vh;
   padding: 3rem 1rem;
   text-align: center;
+}
+
+.app-footer {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #cddce8;
+  text-align: center;
+}
+
+.app-footer a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.app-footer a:hover {
+  color: var(--accent-hover);
 }
 
 h1 {

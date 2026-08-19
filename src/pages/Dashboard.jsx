@@ -1,14 +1,12 @@
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import SearchBar from "../components/SearchBar";
-import ReviewForm from "../components/ReviewForm";
 import { weatherCodeMap, fetchCityWeather } from "../utils/weather"
 import "../App.css"
 
 function Dashboard() {
   const [cities, setCities] = useState([])
   const [previewCity, setPreviewCity] = useState(null)
-  const [showReviewForm, setShowReviewForm] = useState(false)
   const [hasLoaded, setHasLoaded] = useState(false)
 
   useEffect(() => {
@@ -115,16 +113,6 @@ function Dashboard() {
           )
         })}
       </div>
-
-      <footer className="app-footer">
-        <button className="review-toggle-btn" onClick={() => setShowReviewForm(true)}>
-          Leave a Review
-        </button>
-      </footer>
-
-      {showReviewForm && (
-        <ReviewForm onClose={() => setShowReviewForm(false)} />
-      )}
     </div>
   )
 }
