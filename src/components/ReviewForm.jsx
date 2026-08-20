@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import emailjs from '@emailjs/browser'
+import { db } from '../firebase'
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
 
 function ReviewForm({ onClose }) {
     const [name, setName] = useState('')
@@ -7,7 +9,7 @@ function ReviewForm({ onClose }) {
     const [message, setMessage] = useState('')
     const [rating, setRating] = useState(0)
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault()
 
         if (rating === 0) {
@@ -15,26 +17,41 @@ function ReviewForm({ onClose }) {
             return
         }
 
-        emailjs
-            .send(
-                'service_7e9bo5t',
-                'template_g7a2zrs',
-                {
-                    from_name: name,
-                    from_email: email,
-                    message: message,
-                    rating: rating,
-                },
-                'IFjBK1oaRmHOZ15hl'
-            )
-            .then(() => {
-                alert('Thanks for your review!')
-                onClose()
+        try {
+            const docRef = await addDoc(collection(db, 'reviews'), {
+                name: name,
+                rating: rating,
+                message: message,
+                email: email,
+                createdAt: serverTimestamp(),
             })
-            .catch((error) => {
-                console.log('Failed to send:', error)
-                alert('something went wrong. Please try again.')
-            })
+
+            console.log('Saved with ID:', docRef.id)
+
+            await emailjs
+                .send(
+                    'service_7e9bo5t',
+                    'template_g7a2zrs',
+                    {
+                        from_name: name,
+                        from_email: email,
+                        message: message,
+                        rating: rating,
+                    },
+                    'IFjBK1oaRmHOZ15hl'
+                )
+                .then(() => {
+                    alert('Thanks for your review!')
+                    onClose()
+                })
+                .catch((error) => {
+                    console.log('Failed to send:', error)
+                    alert('something went wrong. Please try again.')
+                })
+        } catch(error) {
+            console.log('Failed to save review:', error)
+            alert('Something went wrong saving your review. Please try again.')
+        }
     }
 
     return (

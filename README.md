@@ -49,3 +49,7 @@ CSS3
 - Restructured app into pages
 - Added local time display using Open-Meteo's API
 - Added fallback pattern for unmapped WMO weather codes to prevent crashes
+- Set up a firebase project and firesore database
+- Installed and configured the firebase SDK
+- Built public review display on the reviews page
+- Confirmed full loop working

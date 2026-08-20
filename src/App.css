@@ -193,6 +193,39 @@ h1 {
   text-align: center;
 }
 
+.reviews-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 500px;
+  margin: 2rem auto 0;
+}
+
+.review-card {
+  background-color: var(--bg-surface);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px var(--shadow);
+  text-align: left;
+}
+
+.review-card .stars {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  justify-content: flex-start;
+}
+
+.review-message {
+  color: var(--text-primary);
+  margin: 0.5rem 0;
+}
+
+.review-name {
+  color: var(--text-secondary);
+  font-weight: 600;
+  margin: 0;
+}
+
 .stars {
   display: flex;
   justify-content: center;
