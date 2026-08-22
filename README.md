@@ -1,7 +1,7 @@
 # Weather App
 
 A React Weather dashboard that lets users search any city and add it to a personal dashboard, built to learn React fundamentals from scratch.
-Live site: [Here](https://https://weather-app-eight-iota-k98tkvufla.vercel.app/)
+Live site: [Here](https://weather-app-eight-iota-k98tkvufla.vercel.app/)
 
 ## What I'm Building
 A dashboard-style weather app where users can search cities, preview their weather in a modal, add cities to a saved dashboard, and remove them. Saved cities persist across page refreshes using localStorage.
