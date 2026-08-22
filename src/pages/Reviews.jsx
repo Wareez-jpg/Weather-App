@@ -35,14 +35,14 @@ function Reviews() {
             {reviews.map((review, index) => (
                 <div key={index} className="review-card">
                     <div className="stars">
-                        {[1, 2, 3, 4, 5].map((star) => {
+                        {[1, 2, 3, 4, 5].map((star) => (
                             <span
                                 key={star}
                                 className={star <= review.rating ? 'star filled' : 'star'}
                             >
                                 ★
                             </span>
-                        })}
+                        ))}
                     </div>
                     <p className="review-message">{review.message}</p>
                     <p className="review-name">- {review.name}</p>

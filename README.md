@@ -53,3 +53,7 @@ CSS3
 - Installed and configured the firebase SDK
 - Built public review display on the reviews page
 - Confirmed full loop working
+- Learned environment variables with vite
+- Moved Firebase config out of source code into environment variables
+- Fixed star rating display bug on public review cards
+- Review feature fully complete
